@@ -1,6 +1,7 @@
+
 ## Description
 
-SolarHeaven server .
+framework TypeScript starter repository.
 
 ## Installation
 
