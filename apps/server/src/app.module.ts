@@ -9,6 +9,10 @@ import { DepartmentsModule } from './departments/departments.module';
 import { ServicesModule } from './services/services.module';
 import { ReservationsModule } from './reservations/reservations.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CustomersModule } from './customers/customers.module';
+import { TechniciansModule } from './technicians/technicians.module';
+import { AdministratorsModule } from './administrators/administrators.module';
+import { UsersModule } from './users/users.module';
 
 
 @Module({
@@ -22,7 +26,7 @@ import { CategoriesModule } from './categories/categories.module';
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     useClass: DatabaseConfig,
-  }),DepartmentsModule, ServicesModule, ReservationsModule, CategoriesModule],
+  }),DepartmentsModule, ServicesModule, ReservationsModule, CategoriesModule, CustomersModule, TechniciansModule, AdministratorsModule, UsersModule],
   controllers: [],
   providers: [],
 })

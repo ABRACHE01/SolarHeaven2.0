@@ -10,6 +10,7 @@ export default () => ({
     database: process.env.DB_DATABASE,
     synchronize: true,
     logging: false,
+    autoLoadEntities: true,
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
   },
 });

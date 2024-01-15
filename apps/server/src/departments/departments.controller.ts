@@ -1,34 +1,88 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body ,Param, Delete, ValidationPipe, UsePipes, HttpCode, Res, NotFoundException, Put  } from '@nestjs/common';
+import { Response } from 'express';
+
+
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 
-@Controller('departments')
+@Controller('api/departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
-  create(@Body() createDepartmentDto: CreateDepartmentDto) {
-    return this.departmentsService.create(createDepartmentDto);
+  @HttpCode(201)
+  @UsePipes(ValidationPipe)
+  async create(@Res() res:Response, @Body() createDepartmentDto: CreateDepartmentDto) {
+    const newDepartment = await this.departmentsService.create(createDepartmentDto);
+    return res.json({
+      message: 'Department has been submitted successfully!',
+      Department: newDepartment,
+    });
   }
 
   @Get()
-  findAll() {
-    return this.departmentsService.findAll();
+  @HttpCode(200)
+  async getAllDepartments(@Res() res:Response) {
+    const Departments = await this.departmentsService.findAll();
+    return res.json({
+      message: 'All Departments',
+      Departments: Departments,
+    });
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.departmentsService.findOne(+id);
+  @Get(':DepartmentId')
+  @HttpCode(200)
+  async findOneDepartmentI(
+    @Res() res:Response,
+    @Param('DepartmentId') DepartmentId: string,
+  ): Promise<any> {
+    const Department = await this.departmentsService.findOne(DepartmentId);
+    if (!Department) {
+      throw new NotFoundException('Department does not exist!');
+    }
+    return res.json({
+      message: 'Department details',
+      DepartmentId: Department,
+    });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
-    return this.departmentsService.update(+id, updateDepartmentDto);
+  @Put(':DepartmentId')
+  @HttpCode(200)
+  @UsePipes(ValidationPipe)
+  async updateDepartment(
+    @Res() res:Response,
+    @Param('DepartmentId') DepartmentId:string,
+    @Body() updateDepartmentDto: UpdateDepartmentDto,
+  ): Promise<any> {
+    const updatedDepartment = await this.departmentsService.update(
+      DepartmentId,
+      updateDepartmentDto,
+    );
+    if (!updatedDepartment) {
+      throw new NotFoundException('Department does not exist!');
+    }
+    return res.json({
+      message: 'Department has been successfully updated',
+      updatedDepartment: updatedDepartment,
+    });
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.departmentsService.remove(+id);
+  @Delete(':DepartmentId')
+  @HttpCode(200)
+  async delete(
+    @Res() res:Response,
+    @Param('DepartmentId') DepartmentId: string,
+  ): Promise<any> {
+    const Department = await this.departmentsService.findOne(DepartmentId);
+
+    if (!Department) {
+      throw new NotFoundException('Department does not exist!');
+    }
+    await this.departmentsService.softDelete(DepartmentId);
+    return res.json({
+      message: 'Department has been trashed successfully',
+      Department: Department,
+    });
   }
 }
