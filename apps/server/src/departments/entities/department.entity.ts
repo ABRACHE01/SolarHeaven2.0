@@ -1,3 +1,5 @@
+import { Technician } from 'src/acounts/technicians/entities/technician.entity';
+import { Administrator } from 'src/acounts/administrators/entities/administrator.entity';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 
@@ -6,7 +8,6 @@ export class Department extends BaseEntity {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
 
     @Column({
         comment: 'the department name',
@@ -19,7 +20,7 @@ export class Department extends BaseEntity {
         type: 'varchar',
         nullable: true,
     })
-    
+
     description: string;
 
     @Column({
@@ -28,6 +29,12 @@ export class Department extends BaseEntity {
         default: false,
     })
     isDeleted: boolean;
+
+    @OneToMany(() => Administrator, administrator => administrator.department)
+    administrators: Administrator[];
+
+    @OneToMany(() => Technician, technician => technician.department)
+    technicians: Technician[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
