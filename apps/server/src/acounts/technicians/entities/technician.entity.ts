@@ -12,4 +12,7 @@ export class Technician extends User {
     @OneToMany(() => Reservation, reservation => reservation.technician)
     reservations: Reservation[];
     
+    @Column()
+    yearsOfExperience: number;
+    
 }

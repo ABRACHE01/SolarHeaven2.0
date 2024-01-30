@@ -7,6 +7,9 @@ export class User extends BaseEntity  {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     
+    @Column({ type: 'varchar', nullable: true })
+    image: string; 
+
     @Column({
         comment: 'the person firstName',
         type: 'varchar',

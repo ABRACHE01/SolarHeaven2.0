@@ -7,6 +7,9 @@ export class Review extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string ; 
 
+    @Column({ type: 'integer'})
+    rating: number;
+    
     @Column({ type: 'text' })
     content: string;
 

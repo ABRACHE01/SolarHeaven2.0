@@ -1,7 +1,8 @@
 import { Administrator } from 'src/acounts/administrators/entities/administrator.entity';
 import { Category } from 'src/categories/entities/category.entity';
 import { Reservation } from 'src/reservations/entities/reservation.entity';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne} from 'typeorm';
+import { Image } from './image.entity';
 
 
 @Entity('services')
@@ -15,6 +16,14 @@ export class Service extends BaseEntity {
         type: 'varchar',
     })
     name: string;
+
+    @Column({
+        comment: 'the service price',
+        type: 'numeric',
+        precision: 10,
+        scale: 2,
+    })
+    price: number;
 
     @Column({
         comment: 'service description',
@@ -36,6 +45,9 @@ export class Service extends BaseEntity {
     @ManyToOne(() => Category, category => category.services)
     category: Category;
 
+    @OneToMany(() => Image, image => image.service)
+    images: Image[];
+    
     @OneToMany(() => Reservation, reservation => reservation.service)
     reservations: Reservation[];
 

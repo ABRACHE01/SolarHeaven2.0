@@ -23,6 +23,11 @@ export class Reservation extends BaseEntity {
     @Column({ type: 'enum', enum: ReservationStatus, default: ReservationStatus.PENDING })
     status: ReservationStatus;
 
+    @Column({
+        comment: 'the address',
+        type: 'varchar',
+    })
+    address: string;
 
     @ManyToOne(() => Service, service => service.reservations)
     service: Service;
