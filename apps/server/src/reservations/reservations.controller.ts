@@ -22,7 +22,7 @@ export class ReservationsController {
   }
 
   @Get()
-  findUntrashed() {
+  findUntrashed(){
     const options: FindOneOptions<Reservation> = { where: { isDeleted: false } };
     return this.reservationsService.find(options); 
   }
