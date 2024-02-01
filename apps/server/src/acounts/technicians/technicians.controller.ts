@@ -4,8 +4,11 @@ import { CreateTechnicianDto } from './dto/create-technician.dto';
 import { UpdateTechnicianDto } from './dto/update-technician.dto';
 import { Technician } from './entities/technician.entity';
 import { FindOneOptions } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('technicians')
+
+@ApiTags('technicians')     
+@Controller('api/technicians')
 export class TechniciansController {
   constructor(private readonly techniciansService: TechniciansService) {}
 

@@ -4,8 +4,11 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { Review } from './entities/review.entity';
 import { FindOneOptions } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('reviews')
+
+@ApiTags('reviews')     
+@Controller('api/reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
   @Post()

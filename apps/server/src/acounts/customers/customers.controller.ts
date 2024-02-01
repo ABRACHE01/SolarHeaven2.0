@@ -4,8 +4,11 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.entity';
 import { FindOneOptions } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('customers')
+
+@ApiTags('customers')     
+@Controller('api/customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 

@@ -4,8 +4,10 @@ import { CreateAdministratorDto } from './dto/create-administrator.dto';
 import { UpdateAdministratorDto } from './dto/update-administrator.dto';
 import { FindOneOptions } from 'typeorm';
 import { Administrator } from './entities/administrator.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('administrators')
+@ApiTags('administrators')     
+@Controller('api/administrators')
 export class AdministratorsController {
   constructor(private readonly administratorsService: AdministratorsService) {}
 

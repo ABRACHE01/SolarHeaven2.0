@@ -5,7 +5,9 @@ import { Response } from 'express';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('departments')  
 @Controller('api/departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}

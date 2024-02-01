@@ -8,15 +8,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { JwtGuard } from '../auth/guards/jwt-auth.guard'; 
-
 import { CreateUserDto } from './dto/create-user.dto'; 
 import { UserService } from './users.service';
-import { Role } from '../auth/enums/role.enum';
-import { Roles } from '../auth/decorators/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('user')
+@ApiTags('users')     
+@Controller('api/user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -28,8 +26,6 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
-
-  
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

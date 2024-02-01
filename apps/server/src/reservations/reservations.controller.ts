@@ -4,8 +4,10 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { Reservation } from './entities/reservation.entity';
 import { FindOneOptions } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('reservations')
+@ApiTags('reservations')     
+@Controller('api/reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 

@@ -6,8 +6,10 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RefreshJwtGuard } from './guards/refresh-jwt-auth.guard';
 import { Role } from './enums/role.enum';
 import { Roles } from './decorators/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('auth')
+@ApiTags('auth')     
+@Controller('api/auth')
 export class AuthController {
 
   constructor(

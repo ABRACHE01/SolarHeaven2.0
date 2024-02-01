@@ -4,8 +4,10 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { FindOneOptions } from 'typeorm';
 import { Category } from './entities/category.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('categories')
+@ApiTags('categories')     
+@Controller('api/categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
