@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { Customer } from './entities/customer.entity';
+import { FindOneOptions } from 'typeorm';
 
 @Controller('customers')
 export class CustomersController {
@@ -11,24 +13,42 @@ export class CustomersController {
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.customersService.create(createCustomerDto);
   }
-
-  @Get()
-  findAll() {
+  
+  @Get('all')
+  getAll() {
     return this.customersService.findAll();
   }
-
+  
+  @Get()
+  findUntrashed() {
+    const options: FindOneOptions<Customer> = { where: { isDeleted: false } };
+    return this.customersService.find(options); 
+  }
+  
+  @Get('trash')
+  findTrashed(){
+    const options: FindOneOptions<Customer> = { where: { isDeleted: true } };
+    return this.customersService.find(options);  
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.customersService.findOne(+id);
+    const options: FindOneOptions<Customer> = { where: { id: id , isDeleted: false } };
+    return this.customersService.find(options);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customersService.update(+id, updateCustomerDto);
+  
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+    return this.customersService.update({ where: { id: id  } }, updateCustomerDto);
   }
-
+  
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customersService.remove(+id);
+  trash(@Param('id') id: string) {
+    return this.customersService.softDelete(id);
+  }
+  
+  @Delete('forcedelete/:id')
+  forceDelete(@Param('id') id: string) {
+    return this.customersService.forceDelete(id);
   }
 }
