@@ -10,9 +10,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class TechniciansService extends BaseService<Technician>  {
   constructor(
     @InjectRepository(Technician)
-    private categoryRepository: Repository<Technician>,
+    private technicianRepository: Repository<Technician>,
   ) {
-    super(categoryRepository);
+    super(technicianRepository);
   }
 }
 
