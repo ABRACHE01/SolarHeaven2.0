@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Role } from 'src/acounts/auth/enums/role.enum';
 
 @Entity('users')
 export class User extends BaseEntity  {
@@ -30,6 +32,17 @@ export class User extends BaseEntity  {
     email: string;
 
     @Column({
+        comment: 'the person role',
+        type: 'enum',
+        enum: Role,
+        default: Role.CUSTOMER,
+      })
+    role: Role;
+
+    @Column({ nullable: false })
+    password: string;
+
+    @Column({
         comment: 'the person phone number',
         type: 'varchar',
         nullable: true,
@@ -47,5 +60,10 @@ export class User extends BaseEntity  {
     createdAt: Date;
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+
+    @BeforeInsert()
+    async hashPasword() {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
 
 }

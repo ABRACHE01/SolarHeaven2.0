@@ -33,7 +33,7 @@ export class DepartmentsController {
 
   @Get(':DepartmentId')
   @HttpCode(200)
-  async findOneDepartmentI(
+  async findOneDepartment(
     @Res() res:Response,
     @Param('DepartmentId') DepartmentId: string,
   ): Promise<any> {
