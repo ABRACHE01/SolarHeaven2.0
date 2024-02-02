@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
+import { PassportModule } from '@nestjs/passport';
+import { RolesGuard } from './guards/roles.guard';
 
 
 @Module({
@@ -18,6 +20,7 @@ import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
     JwtStrategy,
     RefreshJwtStrategy,
     UserService,
+    RolesGuard,
   ],
   controllers: [AuthController],
   imports: [
@@ -27,5 +30,7 @@ import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
       signOptions: { expiresIn: '3600s' },
     }),
   ],
+  exports: [JwtStrategy , RolesGuard],
+
 })
 export class AuthModule {}
