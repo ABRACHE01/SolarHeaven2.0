@@ -15,10 +15,6 @@ export class UserService extends BaseService<User> {
     super(userRepository);
   }
   
-  async findOne(id : string ) {
-    return await this.userRepository.findOne({ where: { id: id } });
-  }
-
   async findOneWithEmail(email: string) {
     return await this.userRepository.findOne({ where: { email: email } });
   }
