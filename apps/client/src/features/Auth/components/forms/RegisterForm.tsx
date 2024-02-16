@@ -89,7 +89,7 @@ export default function RegisterForm() {
         <Select
           label="User role"
           checkIconPosition="right"
-          data={["COSTUMER", "TECHNICIAN"]}
+          data={["CUSTOMER", "TECHNICIAN"]}
           mt="md"
           required
           placeholder="Pick value"
