@@ -17,6 +17,8 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { AuthModule } from './acounts/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './acounts/auth/guards/roles.guard';
+import { JwtGuard } from './acounts/auth/guards/jwt-auth.guard';
+
 
 
 @Module({
@@ -30,11 +32,6 @@ import { RolesGuard } from './acounts/auth/guards/roles.guard';
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     useClass: DatabaseConfig,
-  }),DepartmentsModule, ServicesModule, ReservationsModule, CategoriesModule, CustomersModule, TechniciansModule, AdministratorsModule, UserModule , ReviewsModule, AuthModule],
-  controllers: [],
-  providers: [  {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  }],
+  }),DepartmentsModule, ServicesModule, ReservationsModule, CategoriesModule, CustomersModule, TechniciansModule, AdministratorsModule, UserModule , ReviewsModule, AuthModule ],
 })
 export class AppModule {}

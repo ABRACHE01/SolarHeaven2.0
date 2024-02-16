@@ -4,9 +4,10 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { FindOneOptions } from 'typeorm';
 import { Service } from './entities/service.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-
-@Controller('services')
+@ApiTags('services')     
+@Controller('api/services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 

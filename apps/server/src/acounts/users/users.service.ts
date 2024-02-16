@@ -6,27 +6,25 @@ import { User } from 'src/acounts/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { BaseService } from 'src/base/base.service';
 @Injectable()
-export class UserService {
+export class UserService extends BaseService<User> {
   constructor(
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
-  ) {}
-  async findOne(id : string ) {
-    return await this.userRepo.findOne({ where: { id: id } });
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+  ) {
+    super(userRepository);
   }
-
+  
   async findOneWithEmail(email: string) {
-    return await this.userRepo.findOne({ where: { email: email } });
+    return await this.userRepository.findOne({ where: { email: email } });
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const user = await this.userRepo.create(createUserDto);
-    await this.userRepo.save(user);
+  async createUser(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.create(createUserDto);
+    await this.userRepository.save(user);
     const { password, ...result } = user;
     return result;
   }
-
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return await this.userRepo.update(id, updateUserDto);
-  }
+  
 }
+

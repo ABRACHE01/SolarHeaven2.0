@@ -1,26 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTechnicianDto } from './dto/create-technician.dto';
 import { UpdateTechnicianDto } from './dto/update-technician.dto';
+import { Technician } from './entities/technician.entity';
+import { Repository } from 'typeorm';
+import { BaseService } from 'src/base/base.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class TechniciansService {
-  create(createTechnicianDto: CreateTechnicianDto) {
-    return 'This action adds a new technician';
-  }
-
-  findAll() {
-    return `This action returns all technicians`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} technician`;
-  }
-
-  update(id: number, updateTechnicianDto: UpdateTechnicianDto) {
-    return `This action updates a #${id} technician`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} technician`;
+export class TechniciansService extends BaseService<Technician>  {
+  constructor(
+    @InjectRepository(Technician)
+    private technicianRepository: Repository<Technician>,
+  ) {
+    super(technicianRepository);
   }
 }
+

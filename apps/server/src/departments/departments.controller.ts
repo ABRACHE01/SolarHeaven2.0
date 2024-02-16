@@ -1,11 +1,20 @@
-import { Controller, Get, Post, Body ,Param, Delete, ValidationPipe, UsePipes, HttpCode, Res, NotFoundException, Put  } from '@nestjs/common';
+import { Controller, Get, Post, Body ,Param, Delete, ValidationPipe, UsePipes, HttpCode, Res, NotFoundException, Put, UseGuards  } from '@nestjs/common';
 import { Response } from 'express';
 
 
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { FindOneOptions } from 'typeorm';
+import { Department } from './entities/department.entity';
+import { JwtGuard } from 'src/acounts/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/acounts/auth/guards/roles.guard';
+import { Roles } from 'src/acounts/auth/decorators/roles.decorator';
+import { Role } from 'src/acounts/auth/enums/role.enum';
 
+
+@ApiTags('departments')  
 @Controller('api/departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
@@ -21,9 +30,11 @@ export class DepartmentsController {
     });
   }
 
-  @Get()
+  @Get('all')
+  @UseGuards(JwtGuard , RolesGuard)
+  @Roles(Role.CUSTOMER)
   @HttpCode(200)
-  async getAllDepartments(@Res() res:Response) {
+  async getAll(@Res() res:Response) {
     const Departments = await this.departmentsService.findAll();
     return res.json({
       message: 'All Departments',
@@ -31,13 +42,26 @@ export class DepartmentsController {
     });
   }
 
-  @Get(':DepartmentId')
+  @Get()
+  findUntrashed(){
+    const options: FindOneOptions<Department> = { where: { isDeleted: false } };
+    return this.departmentsService.find(options); 
+  }
+
+  @Get('trash')
+  findTrashed(){
+    const options: FindOneOptions<Department> = { where: { isDeleted: true } };
+    return this.departmentsService.find(options);  
+  }
+
+  @Get(':id')
   @HttpCode(200)
-  async findOneDepartment(
+  async findOne(
     @Res() res:Response,
-    @Param('DepartmentId') DepartmentId: string,
+    @Param('id') id: string,
   ): Promise<any> {
-    const Department = await this.departmentsService.findOne(DepartmentId);
+    const options: FindOneOptions<Department> = { where: { id: id , isDeleted: false } };
+    const Department = await this.departmentsService.find(options);
     if (!Department) {
       throw new NotFoundException('Department does not exist!');
     }
@@ -47,16 +71,17 @@ export class DepartmentsController {
     });
   }
 
+
   @Put(':DepartmentId')
   @HttpCode(200)
   @UsePipes(ValidationPipe)
   async updateDepartment(
     @Res() res:Response,
-    @Param('DepartmentId') DepartmentId:string,
+    @Param('id') id:string,
     @Body() updateDepartmentDto: UpdateDepartmentDto,
   ): Promise<any> {
     const updatedDepartment = await this.departmentsService.update(
-      DepartmentId,
+      { where: { id: id  } },
       updateDepartmentDto,
     );
     if (!updatedDepartment) {
@@ -74,7 +99,7 @@ export class DepartmentsController {
     @Res() res:Response,
     @Param('DepartmentId') DepartmentId: string,
   ): Promise<any> {
-    const Department = await this.departmentsService.findOne(DepartmentId);
+    const Department = await this.departmentsService.find({ where: { id: DepartmentId  } });
 
     if (!Department) {
       throw new NotFoundException('Department does not exist!');
@@ -85,4 +110,10 @@ export class DepartmentsController {
       Department: Department,
     });
   }
+
+  @Delete('forcedelete/:id')
+  forceDelete(@Param('id') id: string) {
+    return this.departmentsService.forceDelete(id);
+  }
+
 }
