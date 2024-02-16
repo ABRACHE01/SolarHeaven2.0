@@ -1,8 +1,14 @@
+import { useGetDepartmentsQuery } from "../redux/dashApiSlice";
 
 const DashContainer = () => {
-  return (
-    <div>DashboardContainer</div>
-  )
-}
 
-export default DashContainer
+  const { data: departments } = useGetDepartmentsQuery({});
+  console.log(departments)
+return(
+  <>
+  </>
+)
+
+};
+
+export default DashContainer;

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body ,Param, Delete, ValidationPipe, UsePipes, HttpCode, Res, NotFoundException, Put  } from '@nestjs/common';
+import { Controller, Get, Post, Body ,Param, Delete, ValidationPipe, UsePipes, HttpCode, Res, NotFoundException, Put, UseGuards  } from '@nestjs/common';
 import { Response } from 'express';
 
 
@@ -8,6 +8,11 @@ import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FindOneOptions } from 'typeorm';
 import { Department } from './entities/department.entity';
+import { JwtGuard } from 'src/acounts/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/acounts/auth/guards/roles.guard';
+import { Roles } from 'src/acounts/auth/decorators/roles.decorator';
+import { Role } from 'src/acounts/auth/enums/role.enum';
+
 
 @ApiTags('departments')  
 @Controller('api/departments')
@@ -26,6 +31,8 @@ export class DepartmentsController {
   }
 
   @Get('all')
+  @UseGuards(JwtGuard , RolesGuard)
+  @Roles(Role.CUSTOMER)
   @HttpCode(200)
   async getAll(@Res() res:Response) {
     const Departments = await this.departmentsService.findAll();

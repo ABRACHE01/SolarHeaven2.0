@@ -46,6 +46,7 @@ export function AuthHeader() {
     <Box>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
+        <Button className="font-extrabold  text-green-500">SOLARHAVEN</Button>
           <Group h="100%" gap={0} visibleFrom="sm">
             {/* <a href="#" className={classes.link}>
               Home

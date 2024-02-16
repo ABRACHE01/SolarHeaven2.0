@@ -34,7 +34,6 @@ export class AuthService {
             role: user.role,
         };
         
-        // Sign JWT tokens
         const accessToken = this.jwtService.sign(payload);
         const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
         
@@ -42,11 +41,9 @@ export class AuthService {
         res.cookie('access_token', accessToken);
         res.cookie('refresh_token', refreshToken);
         
-        // Return a success message
         return {  mesg:'User logged in successfully.' , user };
     } catch (error) {
         console.error('Error during login:', error);
-        // Return an error message if something went wrong
         throw new Error('An error occurred during login.');
     }
 }

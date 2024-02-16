@@ -38,6 +38,8 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(JwtGuard , RolesGuard)
+  @Roles(Role.CUSTOMER)
   findUntrashed() {
     const options: FindOneOptions<User> = { where: { isDeleted: false } };
     return this.userService.find(options); 
@@ -57,8 +59,6 @@ export class UserController {
   
 
   @Get(':id')
-  @UseGuards(JwtGuard , RolesGuard)
-  @Roles(Role.ADMIN)
   findOne(@Param('id') id: string) {
     const options: FindOneOptions<User> = { where: { id: id , isDeleted: false } };
     return this.userService.find(options);

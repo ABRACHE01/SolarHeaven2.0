@@ -1,11 +1,7 @@
-import { selectIsLoggedIn } from "../redux/authSelectors";
-import { useSelector } from "react-redux";
 import { LoginForm } from "../components/forms/LoginForm";
 import { Anchor, Container, Text, Title } from "@mantine/core";
 const LoginContainer = () => {
-  const user = useSelector(selectIsLoggedIn);
 
-  console.log(user);
 
   return (
     <Container size={420} my={250}>
