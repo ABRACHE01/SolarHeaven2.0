@@ -5,7 +5,7 @@ import GlobalRoutes from './routes/GlobalRoutes';
 
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider >
       <GlobalRoutes/>
     </MantineProvider>
   );

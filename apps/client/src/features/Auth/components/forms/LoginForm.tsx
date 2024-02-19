@@ -12,14 +12,12 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../redux/authSlice";
 import { encryptData } from "../../../../utils/helpers";
 import Cookies from 'js-cookie';
-import { useNavigate } from "react-router-dom";
 import { xIcon } from "../icons";
 
 
 
 export function LoginForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const [login, { isLoading }] = useLoginMutation();
   const [error, setError] = useState<string | null>(null);
@@ -43,14 +41,13 @@ export function LoginForm() {
         const encryptedUser = encryptData(message.user);
         Cookies.set("user" , encryptedUser );
         dispatch(setCredentials(message?.user));
-        navigate("/dashboard");
       }       
 
     } catch (error: any) {
       if (!error?.data) setError("No response");
       else if (error?.status === 400) setError("Invalid credentials");
       else if (error?.status === 404) setError("User not found");
-      else if (error?.status === 401) setError("Incorrect password");
+      else if (error?.status === 401) setError("Incorrect credentials");
       else setError("Login failed");
 
     }
@@ -83,7 +80,7 @@ export function LoginForm() {
             Loading
         </Button>
         :
-        <Button fullWidth mt="xl" type="submit" className="bg-slate-600" >
+        <Button fullWidth mt="xl" type="submit" color="gray" className="bg-slate-600  dark:bg-red-400">
         Sign in
         </Button>
           

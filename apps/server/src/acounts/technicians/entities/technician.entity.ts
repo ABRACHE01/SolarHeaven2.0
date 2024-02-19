@@ -12,7 +12,12 @@ export class Technician extends User {
     @OneToMany(() => Reservation, reservation => reservation.technician)
     reservations: Reservation[];
     
-    @Column()
+    
+    @Column({
+        comment: 'the technician years Of Experience',
+        type: 'varchar',
+        nullable: true,
+    })
     yearsOfExperience: number;
     
 }
