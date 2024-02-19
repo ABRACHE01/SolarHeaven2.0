@@ -1,10 +1,8 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, BeforeInsert, TableInheritance } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'src/acounts/auth/enums/role.enum';
 
-@Entity('users')
-export class User extends BaseEntity  {
-
+export abstract class User extends BaseEntity  {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;

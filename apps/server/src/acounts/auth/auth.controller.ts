@@ -8,6 +8,7 @@ import { Role } from './enums/role.enum';
 import { Roles } from './decorators/roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express'; 
+import { GoogleOAuthGuard } from './guards/google-oauth.guard';
 
 @ApiTags('auth')     
 @Controller('api/auth')
@@ -18,6 +19,20 @@ export class AuthController {
     private userService: UserService,
   ) {}
 
+  //google auth
+
+  @Get()
+  @UseGuards(GoogleOAuthGuard)
+  async googleAuth(@Request() req : any) {}
+
+  
+  @Get('google-redirect')
+  @UseGuards(GoogleOAuthGuard)
+  googleAuthRedirect(@Request() req:any) {
+  }
+
+
+  //simple auth 
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req: any, @Res() res: Response) {
