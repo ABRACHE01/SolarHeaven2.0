@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ObjectLiteral, Repository, FindOneOptions } from 'typeorm';
+import { ObjectLiteral, Repository, FindOneOptions, FindManyOptions } from 'typeorm';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
 
 @Injectable()
@@ -10,8 +10,8 @@ export class BaseService<T extends ObjectLiteral> {
     return this.repository.save(entity);
   }
 
-  async find(conditions: FindOneOptions<T>): Promise<T | null> {
-    return this.repository.findOne(conditions);
+  async find(conditions: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(conditions);
   }
 
   async findAll(): Promise<T[]> {
