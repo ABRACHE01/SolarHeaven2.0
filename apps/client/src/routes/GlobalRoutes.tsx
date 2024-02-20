@@ -8,6 +8,11 @@ import LandingPage from "../shared/pages/LandingPage";
 import AdminRoutes from "../features/Admin/routes/AdminRoutes";
 import CustomerRoutes from "../features/Customer/routes/CustomerRoutes";
 import TechnicianRoutes from "../features/Technician/routes/TechnicianRoutes";
+import DepartmentRoutes from "../features/department/routes/DepartmentRoutes";
+import ServiceRoutes from "../features/services/routes/ServiceRoutes";
+import CategoryRoutes from "../features/service-category/routes/CategoryRoutes";
+import ReservationRoutes from "../features/reservation/routes/ReservationRoutes";
+import ReviewRoutes from "../features/review/routes/ReviewRoutes";
 const GlobalRoutes = () => {
   return (
     <Routes>
@@ -46,6 +51,51 @@ const GlobalRoutes = () => {
           element={
             <AuthMiddleware>
               <TechnicianRoutes />
+            </AuthMiddleware>
+          }
+        />
+
+      <Route
+          path="departments/*"
+          element={
+            <AuthMiddleware>
+              <DepartmentRoutes />
+            </AuthMiddleware>
+          }
+        />
+
+      <Route
+          path="services/*"
+          element={
+            <AuthMiddleware>
+              <ServiceRoutes/>
+            </AuthMiddleware>
+          }
+        />
+
+      <Route
+          path="categories/*"
+          element={
+            <AuthMiddleware>
+              <CategoryRoutes/>
+            </AuthMiddleware>
+          }
+        />
+
+      <Route
+          path="reservations/*"
+          element={
+            <AuthMiddleware>
+              <ReservationRoutes/>
+            </AuthMiddleware>
+          }
+        />
+        
+      <Route
+          path="reviews/*"
+          element={
+            <AuthMiddleware>
+              <ReviewRoutes/>
             </AuthMiddleware>
           }
         />

@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import CustomerDashboard from "../containers/CustomerDashboard";
 
+
 const CustomerRoutes = () => (
   <Routes>
     <Route path="/">

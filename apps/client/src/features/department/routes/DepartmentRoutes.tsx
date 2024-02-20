@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
-import DepartmentDashboard from "../containers/DepartmentDashboard";
+import DepartmentsContainer from "../containers/DepartmentsContainer";
 
 const DepartmentRoutes = () => (
   <Routes>
     <Route path="/">
-      <Route index element={<DepartmentDashboard />} />
+      <Route index element={<DepartmentsContainer />} />
     </Route>
   </Routes>
 );
