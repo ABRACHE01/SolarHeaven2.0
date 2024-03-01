@@ -8,7 +8,7 @@ import { Technician } from '../technicians/entities/technician.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Administrator]) , 
+    TypeOrmModule.forFeature([Administrator]), 
     TypeOrmModule.forFeature([Customer]), 
     TypeOrmModule.forFeature([Technician]), 
   ],
