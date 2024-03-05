@@ -46,7 +46,7 @@ export class AuthService {
         console.error('Error during login:', error);
         throw new Error('An error occurred during login.');
     }
-}
+  }
   
   async refreshToken(user: User) {
     const payload = {

@@ -89,11 +89,11 @@ export default function RegisterForm() {
         <Select
           label="User role"
           checkIconPosition="right"
-          data={["customer", "technician"]}
+          data={["customer"]}
           mt="md"
           required
           placeholder="Pick value"
-          // defaultValue="COSTUMER"
+          //defaultValue="COSTUMER"
           {...form.getInputProps("role")}
         />
         <TextInput
