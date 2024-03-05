@@ -19,7 +19,7 @@ export function AuthHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const { setColorScheme } = useMantineColorScheme();
+  const { setColorScheme } =  useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
